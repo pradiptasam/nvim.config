@@ -11,7 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("pradipta.plugins", {
+require("lazy").setup({ {import = "pradipta.plugins"}, { import = "pradipta.plugins.lsp" } }, {
    checker = {
     enabled = true,
     notify = false,

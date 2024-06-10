@@ -48,7 +48,7 @@ return {
     keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
     keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
     keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
-    keymap.set("n", "<leader>fm", "<cmd>Telescope resume<cr>", { desc = "Find string under cursor in cwd" })
+    keymap.set("n", "<leader>fm", "<cmd>Telescope resume<cr>", { desc = "Resume the last telescope search" })
     keymap.set("n", "<leader>fh", "<cmd>Telescope harpoon marks<cr>", { desc = "Take a look at the harpoon list" })
     keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Take a look at the file buffer" })
   end,

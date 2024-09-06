@@ -1,2 +1,2 @@
-require("pradipta.core")
-require("pradipta.lazy")
+require("user.core")
+require("user.lazy")

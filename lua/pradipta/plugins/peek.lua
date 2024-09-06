@@ -10,7 +10,7 @@ return{
 
       syntax = true,            -- enable syntax highlighting, affects performance
 
-      theme = 'dark',           -- 'dark' or 'light'
+      theme = 'light',           -- 'dark' or 'light'
 
       update_on_change = true,
 

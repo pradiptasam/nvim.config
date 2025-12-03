@@ -42,3 +42,6 @@ opt.splitbelow = true -- split horizontal window to the bottom
 opt.swapfile = false
 
 opt.iskeyword:append("-")
+
+opt.wrap = true
+opt.undofile = true

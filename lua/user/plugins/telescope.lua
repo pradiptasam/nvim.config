@@ -6,6 +6,11 @@ return {
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     "nvim-tree/nvim-web-devicons",
     "folke/todo-comments.nvim",
+    "isak102/telescope-git-file-history.nvim",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "tpope/vim-fugitive"
+    }
   },
   config = function()
     local telescope = require("telescope")

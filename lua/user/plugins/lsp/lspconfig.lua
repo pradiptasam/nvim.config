@@ -84,6 +84,14 @@ return {
       "graphql", "emmet_ls", "prismals", "pyright"
     }
 
+    -- C/C++ server (clangd requires utf-8 offset encoding to avoid conflicts)
+    local clangd_capabilities = vim.tbl_deep_extend("force", capabilities, {
+      offsetEncoding = { "utf-8" },
+    })
+    lspconfig.clangd.setup({
+      capabilities = clangd_capabilities,
+    })
+
     for _, server in ipairs(servers) do
       lspconfig[server].setup({
         capabilities = capabilities,

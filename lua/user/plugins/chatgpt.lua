@@ -8,9 +8,9 @@ return{
     "nvim-telescope/telescope.nvim",
     "nvim-telescope/telescope-fzy-native.nvim",
   },
-  config = function()
-    require("chatgpt").setup({
-      async_api_key_cmd = "pass show api/tokens/openai",
-    })
-  end,
+  -- config = function()
+  --   require("chatgpt").setup({
+  --     async_api_key_cmd = "pass show api/tokens/openai",
+  --   })
+  -- end,
 }

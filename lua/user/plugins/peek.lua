@@ -28,5 +28,9 @@ return{
     })
     vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
     vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
+
+    local keymap = vim.keymap
+    keymap.set("n", "<leader>po", "<cmd>PeekOpen<cr>", { desc = "Open markdown preview" })
+    keymap.set("n", "<leader>pc", "<cmd>PeekClose<cr>", { desc = "Close markdown preview" })
   end,
 }

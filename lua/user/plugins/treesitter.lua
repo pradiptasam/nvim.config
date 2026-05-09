@@ -49,6 +49,7 @@ return {
         "julia",
         "latex",
         "python",
+        "cpp",
       },
       incremental_selection = {
         enable = true,

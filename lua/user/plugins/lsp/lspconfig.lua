@@ -7,12 +7,6 @@ return {
     { "folke/neodev.nvim", opts = {} },
   },
   config = function()
-    -- import lspconfig plugin
-    local lspconfig = require("lspconfig")
-
-    -- import mason_lspconfig plugin
-    local mason_lspconfig = require("mason-lspconfig")
-
     -- import cmp-nvim-lsp plugin
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
@@ -71,35 +65,39 @@ return {
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
     -- Change the Diagnostic symbols in the sign column (gutter)
-    -- (not in youtube nvim video)
-    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-    for type, icon in pairs(signs) do
-      local hl = "DiagnosticSign" .. type
-      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-    end
+    vim.diagnostic.config({
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = " ",
+          [vim.diagnostic.severity.WARN] = " ",
+          [vim.diagnostic.severity.HINT] = "󰠠 ",
+          [vim.diagnostic.severity.INFO] = " ",
+        },
+      },
+    })
 
-    -- Setup servers directly
+    -- Setup servers using the new vim.lsp.config API (nvim-lspconfig v3 / Neovim 0.11+)
     local servers = {
       "html", "cssls", "tailwindcss", "svelte", "ts_ls",
-      "graphql", "emmet_ls", "prismals", "pyright"
+      "graphql", "emmet_ls", "prismals", "pyright",
     }
 
-    -- C/C++ server (clangd requires utf-8 offset encoding to avoid conflicts)
-    local clangd_capabilities = vim.tbl_deep_extend("force", capabilities, {
-      offsetEncoding = { "utf-8" },
-    })
-    lspconfig.clangd.setup({
-      capabilities = clangd_capabilities,
-    })
-
     for _, server in ipairs(servers) do
-      lspconfig[server].setup({
-        capabilities = capabilities,
+      vim.lsp.config(server, { capabilities = capabilities })
+      vim.lsp.enable(server)
+    end
+
+    -- C/C++ server (clangd requires utf-8 offset encoding to avoid conflicts)
+    if vim.fn.executable("clangd") == 1 then
+      local clangd_capabilities = vim.tbl_deep_extend("force", capabilities, {
+        offsetEncoding = { "utf-8" },
       })
+      vim.lsp.config("clangd", { capabilities = clangd_capabilities })
+      vim.lsp.enable("clangd")
     end
 
     -- Lua server with special settings
-    lspconfig.lua_ls.setup({
+    vim.lsp.config("lua_ls", {
       capabilities = capabilities,
       settings = {
         Lua = {
@@ -108,9 +106,10 @@ return {
         },
       },
     })
+    vim.lsp.enable("lua_ls")
 
     -- Svelte server with special settings
-    lspconfig.svelte.setup({
+    vim.lsp.config("svelte", {
       capabilities = capabilities,
       on_attach = function(client, bufnr)
         vim.api.nvim_create_autocmd("BufWritePost", {
@@ -123,13 +122,13 @@ return {
     })
 
     -- GraphQL server with filetypes
-    lspconfig.graphql.setup({
+    vim.lsp.config("graphql", {
       capabilities = capabilities,
       filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
     })
 
     -- Emmet server with filetypes
-    lspconfig.emmet_ls.setup({
+    vim.lsp.config("emmet_ls", {
       capabilities = capabilities,
       filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
     })
